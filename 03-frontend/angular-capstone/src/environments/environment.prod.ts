@@ -8,6 +8,6 @@ export const environment = {
   auth0: {
     domain: 'dev-sdwuth2wncoe3lpg.us.auth0.com',
     clientId: 'DP97SAzYGcUJzWXltoSoldDOTZHhnXqO',
-    audience: 'https://ecommerce-capstone-production.up.railway.app'
+    // audience: 'https://ecommerce-capstone-production.up.railway.app'
   }
 };

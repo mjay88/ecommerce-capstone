@@ -9,7 +9,7 @@ const myAppConfig = {
     clientId: environment.auth0.clientId,
     authorizationParams: {
       redirect_uri: redirectUri,
-      audience: environment.auth0.audience,
+      // audience: environment.auth0.audience,
     },
     cacheLocation: 'localstorage' as const,
     useRefreshTokens: true,
