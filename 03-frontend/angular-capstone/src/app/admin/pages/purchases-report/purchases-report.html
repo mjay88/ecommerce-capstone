@@ -1,0 +1,101 @@
+<div class="main-content">
+<div class="section-content section-content-p30">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="m-0">Purchases Report</h2>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" (click)="load()" [disabled]="loading">
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading / Error / Empty states -->
+    <div *ngIf="loading" class="alert alert-info">Loading purchases…</div>
+
+    <div *ngIf="!loading && errorMsg" class="alert alert-danger">
+      {{ errorMsg }}
+    </div>
+
+    <div *ngIf="!loading && !errorMsg && orders.length === 0" class="alert alert-warning">
+      No purchases found.
+    </div>
+
+    <!-- Orders table -->
+    <div *ngIf="!loading && !errorMsg && orders.length > 0" class="table-responsive">
+      <table class="table table-sm table-striped align-middle">
+        <thead>
+          <tr>
+            <th style="width: 48px"></th>
+            <th>Tracking #</th>
+            <th>Email</th>
+            <th>Total Qty</th>
+            <th>Total Price</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container *ngFor="let o of orders">
+            <!-- Order row -->
+            <tr>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="toggle(o.orderTrackingNumber)"
+                >
+                  {{ isOpen(o.orderTrackingNumber) ? '−' : '+' }}
+                </button>
+              </td>
+
+              <td class="fw-semibold">{{ o.orderTrackingNumber }}</td>
+              <td>{{ o.customerEmail || '—' }}</td>
+              <td>{{ o.totalQuantity }}</td>
+              <td>{{ o.totalPrice | currency: 'USD' }}</td>
+              <td>{{ o.dateCreated ? (o.dateCreated | date: 'medium') : '—' }}</td>
+            </tr>
+
+            <!-- Expanded items -->
+            <tr *ngIf="isOpen(o.orderTrackingNumber)">
+              <td colspan="6">
+                <div class="p-2 border rounded bg-light">
+                  <div class="fw-semibold mb-2">Items</div>
+
+                  <div *ngIf="!o.items || o.items.length === 0" class="text-muted">
+                    No items found for this order.
+                  </div>
+
+                  <div *ngIf="o.items && o.items.length > 0" class="table-responsive">
+                    <table class="table table-sm mb-0">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Description</th>
+                          <th style="width: 110px">Unit Price</th>
+                          <th style="width: 70px">Qty</th>
+                          <th style="width: 120px">Line Total</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr *ngFor="let i of o.items">
+                          <td class="fw-semibold">{{ i.productName }}</td>
+                          <td class="text-muted">{{ i.productDescription }}</td>
+                          <td>{{ i.unitPrice | currency: 'USD' }}</td>
+                          <td>{{ i.quantity }}</td>
+                          <td>{{ i.lineTotal | currency: 'USD' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,39 @@
+.login-status-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* User welcome text */
+.login-status-user-info {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Pill-style button */
+.security-btn {
+  background: #205b8d;
+  color: #ffffff;
+  border: none;
+  padding: 5px 18px;
+  border-radius: 999px;   /* pill shape */
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.15s ease-in-out;
+}
+
+/* Hover effect */
+.security-btn:hover {
+  background: #17456b;   /* slightly darker on hover */
+  transform: translateY(-1px);
+}
+
+/* Prevent button focus outline looking odd */
+.security-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(32, 91, 141, 0.3);
+}

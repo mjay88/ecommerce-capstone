@@ -1,0 +1,58 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Inventory Report</h2>
+        <button class="btn btn-primary" (click)="load()" [disabled]="loading">
+          Refresh
+        </button>
+      </div>
+
+      <div *ngIf="loading" class="alert alert-info">Loading inventory...</div>
+
+      <div *ngIf="errorMsg" class="alert alert-danger">
+        {{ errorMsg }}
+      </div>
+
+      <div *ngIf="!loading && !errorMsg" class="card shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th class="text-end">Price</th>
+                  <th class="text-end">Units In Stock</th>
+                  <th class="text-center">Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let r of rows; trackBy: trackById">
+                  <td>{{ r.sku || '-' }}</td>
+                  <td>{{ r.name || '-' }}</td>
+                  <td>{{ r.categoryName || '-' }}</td>
+                  <td class="text-end">{{ r.unitPrice ?? 0 | currency }}</td>
+                  <td class="text-end">{{ r.unitsInStock ?? 0 }}</td>
+                  <td class="text-center">
+                    <span
+                      class="badge"
+                      [ngClass]="(r.active ?? true) ? 'bg-success' : 'bg-secondary'"
+                    >
+                      {{ (r.active ?? true) ? 'Yes' : 'No' }}
+                    </span>
+                  </td>
+                </tr>
+
+                <tr *ngIf="rows.length === 0">
+                  <td colspan="6" class="text-center text-muted py-4">No inventory data found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

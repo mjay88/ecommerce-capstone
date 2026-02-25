@@ -1,0 +1,55 @@
+<div class="page-wrapper">
+  <!-- MENU SIDEBAR-->
+  <aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+      <a routerLink="/products">
+        <img src="assets/images/crescent-moon-art-works-logo.png" alt="crescent moon art works logo" class="img-responsive" />
+      </a>
+    </div>
+    <app-product-category-menu></app-product-category-menu>
+  </aside>
+  <!-- END MENU SIDEBAR-->
+
+  <div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <header class="header-desktop">
+      <div class="section-content section-content-p30">
+        <div class="container-fluid">
+          <div class="header-wrap">
+            <!-- back button only for admin /admin -->
+            <ng-container *ngIf="isAdminArea$ | async">
+              <a class="btn btn-outline-light me-2" routerLink="/admin"> ← Admin Home </a>
+            </ng-container>
+
+            <!-- don't show search while in admin mode -->
+            <ng-container *ngIf="!(isInAdmin$ | async)">
+              <app-search></app-search>
+            </ng-container>
+
+            <app-login-status></app-login-status>
+
+            <!-- don't show cart while in admin mode-->
+            <ng-container *ngIf="!(isInAdmin$ | async)">
+              <app-cart-status></app-cart-status>
+            </ng-container>
+          </div>
+          <div class="account-wrap"></div>
+        </div>
+      </div>
+    </header>
+    <!-- END HEADER DESKTOP-->
+
+    <!-- MAIN CONTENT-->
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!--END PAGE CONTAINER -->
+<footer>
+  <ul>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Contact Us</a></li>
+    <li><a href="#">Help</a></li>
+  </ul>
+</footer>
