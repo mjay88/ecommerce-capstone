@@ -36,7 +36,7 @@ export class AdminReports {
   // If environment.apiUrl is something like "https://localhost:8443/api"
   // then baseUrl should be that. If it's only "https://localhost:8443",
   // then append "/api" here.
-  private baseUrl = environment.apiUrl ?? 'https://localhost:8443/api';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
