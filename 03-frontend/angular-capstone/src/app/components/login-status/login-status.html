@@ -1,0 +1,23 @@
+<div class="login-status-header">
+
+  <!-- Authenticated -->
+  <ng-container *ngIf="(auth.isAuthenticated$ | async) && (auth.user$ | async) as user">
+
+      <div class="text-light login-status-user-info">
+        Welcome back {{ user.name || user.email }}!
+      </div>
+
+      <button (click)="logout()" class="btn btn-outline-light">
+        Logout
+      </button>
+
+  </ng-container>
+
+  <!-- Not Authenticated -->
+  <ng-container *ngIf="!(auth.isAuthenticated$ | async)">
+      <button (click)="login()" class="security-btn">
+        Login
+      </button>
+  </ng-container>
+
+</div>
