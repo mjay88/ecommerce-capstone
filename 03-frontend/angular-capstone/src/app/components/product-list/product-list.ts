@@ -64,13 +64,14 @@ export class ProductList implements OnInit {
       .subscribe(this.processResult());
   }
 
-  handleListProducts() {
+ handleListProducts() {
   const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
 
-  // If category changed, reset paging
   if (hasCategoryId) {
+    // category view
     this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
 
+    // reset page if category changed
     if (this.previousCategoryId !== this.currentCategoryId) {
       this.thePageNumber = 1;
     }
@@ -78,15 +79,17 @@ export class ProductList implements OnInit {
 
     console.log(`categoryId=${this.currentCategoryId}, page=${this.thePageNumber}`);
 
-    // ✅ category-filtered
     this.productService
       .getProductListPaginate(this.thePageNumber - 1, this.thePageSize, this.currentCategoryId)
       .subscribe(this.processResult());
 
   } else {
-    // ✅ NO category id → show ALL products
-    this.thePageNumber = 1; // optional but usually desired for /products
-    this.previousCategoryId = 0; // optional sentinel
+    // ✅ /products (no id) → ALL products
+    // reset page if coming from a category view
+    if (this.previousCategoryId !== 0) {
+      this.thePageNumber = 1;
+    }
+    this.previousCategoryId = 0;
 
     console.log(`ALL products, page=${this.thePageNumber}`);
 
