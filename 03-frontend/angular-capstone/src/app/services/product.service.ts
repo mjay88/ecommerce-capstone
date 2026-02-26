@@ -77,6 +77,11 @@ export class ProductService {
     );
   }
 
+  getAllProductsPaginate(thePage: number, thePageSize: number): Observable<GetResponseProducts> {
+  const url = `${this.baseUrl}?page=${thePage}&size=${thePageSize}`;
+  return this.httpClient.get<GetResponseProducts>(url);
+}
+
 
 }
 
