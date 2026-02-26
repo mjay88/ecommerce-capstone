@@ -65,33 +65,36 @@ export class ProductList implements OnInit {
   }
 
   handleListProducts() {
-    //check if "id" parameter is available
-    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
+  const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')!;
 
-    if (hasCategoryId) {
-      //get the "id" param string. convert string to an umber using the "+" symbol
-      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
-    } else {
-      //not category id available...default to category id 1
-      this.currentCategoryId = 1;
-    }
-    //check if we have a different category than previous
+  // If category changed, reset paging
+  if (hasCategoryId) {
+    this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
 
-    //if we have a different category id than previous then set the PageNumber back to 1
-    if (this.previousCategoryId != this.currentCategoryId) {
+    if (this.previousCategoryId !== this.currentCategoryId) {
       this.thePageNumber = 1;
     }
-
     this.previousCategoryId = this.currentCategoryId;
 
-    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+    console.log(`categoryId=${this.currentCategoryId}, page=${this.thePageNumber}`);
 
-    //now get the product so the give category id
+    // ✅ category-filtered
     this.productService
       .getProductListPaginate(this.thePageNumber - 1, this.thePageSize, this.currentCategoryId)
       .subscribe(this.processResult());
-  }
 
+  } else {
+    // ✅ NO category id → show ALL products
+    this.thePageNumber = 1; // optional but usually desired for /products
+    this.previousCategoryId = 0; // optional sentinel
+
+    console.log(`ALL products, page=${this.thePageNumber}`);
+
+    this.productService
+      .getAllProductsPaginate(this.thePageNumber - 1, this.thePageSize)
+      .subscribe(this.processResult());
+  }
+}
   updatePageSize(pageSize: string) {
     this.thePageSize = +pageSize;
     this.thePageNumber = 1;
