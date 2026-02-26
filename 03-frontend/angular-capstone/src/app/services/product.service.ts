@@ -19,7 +19,10 @@ export class ProductService {
 
   private categoryUrl = environment.apiUrl + '/product-category';
   
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+
+    
+   }
 
 
     
@@ -81,6 +84,8 @@ export class ProductService {
   const url = `${this.baseUrl}?page=${thePage}&size=${thePageSize}`;
   return this.httpClient.get<GetResponseProducts>(url);
 }
+
+
 
 
 }

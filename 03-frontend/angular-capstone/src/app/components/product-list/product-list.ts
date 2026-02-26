@@ -97,6 +97,8 @@ export class ProductList implements OnInit {
       .getAllProductsPaginate(this.thePageNumber - 1, this.thePageSize)
       .subscribe(this.processResult());
   }
+  console.log('URL:', this.route.snapshot.url.map(s => s.path).join('/'));
+console.log('paramMap id:', this.route.snapshot.paramMap.get('id'));
 }
   updatePageSize(pageSize: string) {
     this.thePageSize = +pageSize;

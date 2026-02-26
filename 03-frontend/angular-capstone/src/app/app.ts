@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, startWith } from 'rxjs/operators';
 
-console.log('RUNTIME audience:', environment.auth0.audience);
+// console.log('RUNTIME audience:', environment.auth0.audience);
 
 const ROLES_CLAIM = 'https://capstone.mjarrett/roles';
 
